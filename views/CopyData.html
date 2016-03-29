@@ -3,11 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="../routes/pullData.js"></script>
+    <script type="text/javascript" src="../routes/pullData.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+<!--    <script>
+        function copyData(){
+            var utils = require("../routes/pullData.js");
+            utils.getUsersFromFireBase();
+        }
+
+        function getUsersFromFireBase(){
+            console.log("Method Invoked GetUsers");
+            alert("Method Invoked GetUsers");
+      //    insertDataToFireBase();
+            /*    firebaseRefUsers.once("value", function(snapshot) {
+             snapshot.forEach(function(childSnapshot) {
+             var key = childSnapshot.key();
+             console.log(key);
+             var userData = childSnapshot.val();
+             console.log(userData);
+             var pairData = "{" + key + ": { " + userData + "}} "
+             copyUsersData(pairData);
+             });
+             });*/
+
+            var Firebase = require('firebase');
+            var firebaseRefUsers = new Firebase("https://blazing-inferno-1151.firebaseio.com/users");
+
+            firebaseRefUsers.on("value", function(snapshot) {
+                console.log(snapshot.val());
+            }, function (errorObject) {
+                console.log("The read failed: " + errorObject.code);
+            });
+
+        }
+    </script>-->
+  <!--  <script>
+        var firebaseRef = new Firebase("https://blazing-inferno-1151.firebaseio.com");
+        var firebaseRefUsers = new Firebase("https://blazing-inferno-1151.firebaseio.com/users");
+        var firebaseRefMessages = new Firebase("https://blazing-inferno-1151.firebaseio.com/chatApp/Messages");
+        var MongoClient = require('mongodb').MongoClient;
+        var assert = require('assert');
+        var ObjectId = require('mongodb').ObjectID;
+        var url = 'mongodb://localhost:27017/chatData';
+
+        function getUsersFromFireBase(){
+            console.log("Method Invoked GetUsers");
+            alert("Method Invoked GetUsers");
+//    insertDataToFireBase();
+            firebaseRefUsers.once("value", function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                    var key = childSnapshot.key();
+                    console.log(key);
+                    var userData = childSnapshot.val();
+                    console.log(userData);
+                    var pairData = "{" + key + ": { " + userData + "}} ";
+                    alert(pairData);
+                    copyUsersData(pairData);
+                });
+            });
+
+        }
+
+        function copyUsersData(userData){
+            MongoClient.connect(url, function(err, db) {
+                assert.equal(null, err);
+                insertUser(db, userData, function() {
+                    db.close();
+                });
+            });
+        }
+
+        var insertUser = function(db, userData, callback) {
+            db.collection('Users').insertOne( userData
+
+                    , function(err, result) {
+                        assert.equal(err, null);
+                        console.log("Inserted a record into the users collection.");
+                        callback();
+                    });
+        };
+
+    </script> -->
 </head>
-<h3>Copy Users Data:</h3> <input type="submit" onsubmit="getMessagesFromFireBase()"> <br/>
-<h3>Copy Messages Data:</h3><input type="submit" onsubmit="getUsersFromFireBase()">
 <body>
+<form id="form1" action="http://localhost:3000/process_post" method="post">
+    <h3>Copy Users Data:</h3> <input type="submit" value="submit"> <br/>
+</form>
+
+ <!-- <form id="form2" onsubmit="getMessagesFromFireBase()">
+    <h3>Copy Messages Data:</h3><input type="submit" value="submit"> <br/>
+</form> -->
 
 </body>
 </html>
