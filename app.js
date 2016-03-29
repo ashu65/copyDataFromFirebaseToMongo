@@ -5,12 +5,13 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var Firebase = require('firebase');
+var http = require('http').Server(express);
 
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/chatData');
 
-var routes = require('./routes/index');
+var routes = require('./routes');
 var users = require('./routes/users');
 
 var app = express();
@@ -67,5 +68,12 @@ app.use(function(req,res,next){
   next();
 });
 
-module.exports = app;
+app.get('/', routes.index);
+app.get('/users', user.list);
+/*
+
+http.createServer(app).listen(3000, function(){
+  console.log("server listening on port 3000");
+});
+*/
 
